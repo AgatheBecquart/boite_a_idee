@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" id='post-it'>
+        {% for idea in idea_list|dictsortreversed:"id"%}
+                <div class="post-it">
+                <a href="/idea_detail/{{idea.id}}"><h2>{{idea.title}}</h2></a><p class='italic'>{{idea.user}}</p><p>{{idea.description}}</p>
+                <form method="POST" class="like-form" action="{% url 'like_or_dislike' pk=idea.pk %}">
+                    {% csrf_token %}
+                    {% with like_count=idea.like_set.count %}
+                    <button type="submit" name="like_or_dislike" value="like" class="btn {% if not idea.user_liked %}{% else %} active{% endif %}" {% if not idea.user_liked %}{% else %}style="background-color:green;color:white;"{% endif %}> 👍 {{ like_count }}</button>
+                    {% endwith %}
+                    {% with dislike_count=idea.dislike_set.count %}
+                    <button type="submit" name="like_or_dislike" value="dislike" class="btn {% if not idea.user_disliked %}{% else %} active{% endif %}" {% if not idea.user_disliked %}{% else %}style="background-color:red;color:white;"{% endif %}> 👎 {{ dislike_count }}</button>
+                    {% endwith %}
+                </form>
+                </div>
+        {% endfor %}
+</div>
+
+{% endblock content %}

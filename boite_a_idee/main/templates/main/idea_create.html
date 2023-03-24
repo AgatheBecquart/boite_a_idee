@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h1>Soumettre une idée : </h1>
+    <br>
+    <form method="POST" id="myForm">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="fieldWrapper">
+            {{form.title.errors}}
+            <p><label for="{{form.title.id_for_label}}">Titre : </label></p>
+            <p>{{form.title}}</p>
+        </div>
+        <div class="fieldWrapper">
+            {{form.description.errors}}
+            <p><label for="{{form.description.id_for_label}}">Description :</label></p>
+            <p>{{form.description}}</p>
+        </div>
+        <button type="submit" class="btn btn-primary">Valider</button>
+    </form>
+    
+<div id="gif-container"></div>
+    
+    <script>
+        // écouter l'événement submit du formulaire
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+          // empêcher la soumission du formulaire immédiatement
+          event.preventDefault();
+      
+          // afficher le GIF animé
+          var gifContainer = document.getElementById("gif-container");
+          gifContainer.innerHTML = '<img src="https://www.gouvernement.fr/sites/all/themes/custom/gouvernement/img/presidentielle/voter.gif">';
+      
+          // soumettre le formulaire après un délai de 5 secondes
+          setTimeout(function() {
+            event.target.submit();
+          }, 3000);
+        });
+    </script>
+      
+</div>
+
+{% endblock content %}

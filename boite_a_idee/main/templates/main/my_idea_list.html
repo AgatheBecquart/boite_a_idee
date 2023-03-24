@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container" id='post-it'>
+        {% for idea in my_idea_list %}
+            {% if idea.user == request.user %}
+                <div class="post-it">
+                    <a href="/idea_detail/{{idea.id}}"><h2>{{idea.title}}</h2></a><p>{{idea.description}}</p>
+                    <button><a href="{% url 'idea_update' idea.id %}">Modifier cette idée</a></button>
+                    <button><a href="{% url 'idea_delete' idea.id %}">Supprimer cette idée</a></button>
+                </div>
+            {% endif %}
+        {% endfor %}
+</div>
+
+{% endblock content %}
